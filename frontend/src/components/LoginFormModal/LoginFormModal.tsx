@@ -34,6 +34,11 @@ function LoginFormModal():JSX.Element {
     }
   };
 
+    const demoLogin = () => {
+    return dispatch(thunkLogin({ credential: "spongebob@aa.io", password: '$2a$10$RWA3t0FVaTYW1AOKNz5La.3jZDoe0RRqfZ3GFIIrmuNxnjHS0bxu6'}))
+      .then(closeModal)
+  }
+
   return (
     <>
       <h1>Log In</h1>
@@ -59,6 +64,7 @@ function LoginFormModal():JSX.Element {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
+        <button id="demologinbutton" onClick={demoLogin}>Demo User</button>
       </form>
     </>
   );

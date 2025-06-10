@@ -6,6 +6,7 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useAppSelector } from "../../redux/store";
+import { Link } from "react-router-dom";
 
 function ProfileButton():JSX.Element {
   const dispatch = useDispatch();
@@ -44,16 +45,22 @@ function ProfileButton():JSX.Element {
     <>
       <button onClick={(e) => toggleMenu(e)}>
         <FaUserCircle />
+
       </button>
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
+              <li>{user.firstName} {user.lastName}</li>
               <li>
                 <button onClick={(e) => logout(e)}>Log Out</button>
               </li>
+              <li>
+      <Link to="/manageProducts" style={{ textDecoration: "none", color: "inherit" }}>
+        Manage Products
+      </Link>
+    </li>
+             
             </>
           ) : (
             <>
