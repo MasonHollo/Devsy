@@ -1,0 +1,30 @@
+.productList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.productTile {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.manage-buttons {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.manage-buttons button {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+

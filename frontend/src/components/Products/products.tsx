@@ -1,50 +1,28 @@
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductsThunk } from "../../redux/product";
-
+import ProductCard from "../subcomponents/productCards";
+import "./products.css"
+import "../subcomponents/productCard.css"
 
 const Products = () => {
-    const dispatch = useDispatch();
-    const product = useSelector((state: any) => state.product.allProducts);
+  const dispatch = useDispatch();
+  const products = useSelector((state: any) => state.product.allProducts);
 
-    useEffect(() => {
-        dispatch(getAllProductsThunk());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(getAllProductsThunk());
+  }, [dispatch]);
 
-
-
-    return (
-
-        <div>
-            {product && product.length > 0 ? (
-                product.map((product: any) => (
-                    <div key={product.id}>
-                        <h3>{product.name}</h3>
-                        <p>Price: ${product.price}</p>
-                        <p>Description: ${product.description}</p>
-
-                        {product.ProductImages && product.ProductImages.length > 0 ? (
-                            product.ProductImages.map((img: any) => (
-                                <img
-                                    key={img.id}
-                                    src={img.url.trim()}
-                                    alt={`${product.name} image`}
-                                    style={{ width: '200px', marginBottom: '5px' }}
-                                />
-                            ))
-                        ) : (
-                            <p>No images available</p>
-                        )}
-                    </div>
-
-                ))
-            ) : (
-                <p>Loading products...</p>
-            )}
-        </div>
-
-    )
-
-}
+  return (
+    <div id="productCard">
+      {products && products.length > 0 ? (
+        products.map((product: any) => <ProductCard key={product.id} product={product} />)
+      ) : (
+        <p>Loading products...</p>
+      )}
+    </div>
+  );
+};
 
 export default Products;

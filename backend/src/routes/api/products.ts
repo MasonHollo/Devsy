@@ -6,7 +6,7 @@ import { handleValidationErrors } from '../../utils/validation';
 const { Product, ProductImage } = db;
 
 const router = require('express').Router();
-
+ 
 const validateProduct = [
     check('name')
         .isLength({ min: 2 })

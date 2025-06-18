@@ -70,7 +70,9 @@ button:hover {
   border: 2px solid black;
   border-radius: 999px; 
   overflow: hidden;
-  width: 600px;
+  width: 40vw;
+  max-width: 600px;
+  min-width: 100px;
 }
 
 #search-bar input {

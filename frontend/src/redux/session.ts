@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+import { csrfFetch, restoreCSRF } from "./csrf";
 import { IActionCreator } from "./types/redux";
 import { ICredentials, ISignUpUser, IUser, SessionInitialState } from "./types/session";
 
@@ -35,6 +35,8 @@ export const thunkAuthenticate = (): any => async (dispatch: any) => {
 
 export const thunkLogin = (credentials: ICredentials): any => async (dispatch: any) => {
   try {
+    await restoreCSRF();
+
     let credential;
 
 

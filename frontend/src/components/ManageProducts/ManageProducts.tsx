@@ -1,66 +1,82 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createAProductThunk } from "../../redux/product";
-import { useNavigate } from 'react-router-dom';
-import { Iproduct } from "../../redux/types/product";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAProductThunk, getAllProductsThunk } from "../../redux/product"; 
+import ProductCard from "../subcomponents/productCards";
+import { useNavigate } from "react-router-dom";
+import DeleteModal from "./deleteModal";
+import { useModal } from "../../context/Modal";
+import './ManageProducts.css';
 
-function ManageProducts(): JSX.Element {
-  const dispatch = useDispatch();
+import { RootState } from "../../redux/store";
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+const ManageProducts = () => {
+  const dispatch = useDispatch<any>();
   const navigate = useNavigate();
+  const { setModalContent, openModal, closeModal } = useModal();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const products = useSelector((state: RootState) => state.product);
+  const currentUser = useSelector((state: RootState) => state.session.user);
 
-    const productData: Omit<Iproduct, "id" | "userId"> = {
-      name,
-      description,
-      price: parseFloat(price),
-    };
+  useEffect(() => {
+    if (products.allProducts.length === 0) {
+      dispatch(getAllProductsThunk());
+    }
+  }, [dispatch, products.allProducts.length]);
 
+  const userProducts = products.allProducts.filter(product => product.userId === currentUser?.id);
+  const hasProducts = userProducts.length > 0;
+
+  const handleUpdate = (productId: number) => {
+    navigate(`/products/${productId}/edit`);
+  };
+
+  const openDeleteModal = (productId: number) => {
+    setModalContent(
+      <DeleteModal 
+        productId={productId} 
+        handleDelete={handleDelete} 
+        closeModal={closeModal}
+      />
+    );
+    openModal();
+  };
+
+  const handleDelete = async (productId: number) => {
     try {
-      await dispatch(createAProductThunk(productData));
-      setName("");
-      setDescription("");
-      setPrice("");
-      navigate(`/`)
-    } catch (err) {
-        throw err
+      await dispatch(deleteAProductThunk(productId));
+      navigate('/manageProducts');
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
-    <div>
-      <h1>Manage Products</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Product name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-        />
-        <button type="submit">Create Product</button>
-      </form>
-    </div>
+    <>
+      <h1 id="manageheader">Manage Your Products</h1>
+      <button id="create-button" onClick={() => navigate('/products/new')}>
+        Create A New Product
+      </button>
+
+      <div className="productList">
+        {hasProducts ? (
+          userProducts.map(product => {
+            const productImage = product.images?.[0]?.url || null;
+            return (
+              <div key={product.id} className="productTile">
+                <ProductCard product={product} productImage={productImage} />
+                <div className="manage-buttons">
+                  <button onClick={() => handleUpdate(product.id)}>Update</button>
+                  <button onClick={() => openDeleteModal(product.id)}>Delete</button>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <a href="/products/new">Create a New Product</a>
+        )}
+      </div>
+    </>
   );
-}
+};
 
 export default ManageProducts;

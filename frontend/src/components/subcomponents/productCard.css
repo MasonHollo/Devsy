@@ -1,0 +1,21 @@
+.productItem {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  width: 100%;
+}
+
+.singleCard {
+  background-color: coral;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+

@@ -7,6 +7,9 @@ export interface Iproduct {
     name: string;
     description: string;
     price: number;
+    id: number;
+    userId: number;
+    ProductImages?: ProductImage[];
 
 }
 interface ProductState {
