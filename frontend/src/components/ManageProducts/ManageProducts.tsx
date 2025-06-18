@@ -5,7 +5,7 @@ import ProductCard from "../subcomponents/productCards";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "./deleteModal";
 import { useModal } from "../../context/Modal";
-import './ManageProducts.css';
+import './manageProducts.css';
 
 import { RootState } from "../../redux/store";
 
