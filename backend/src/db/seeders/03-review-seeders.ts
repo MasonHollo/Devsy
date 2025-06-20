@@ -16,20 +16,20 @@ module.exports = {
   {
     userId: 1,
     productId: 2,
-    body: "hajskfjbajdfahjfajdf",
-    stars: 20
+    body: "WOW! This is the best product ever!!",
+    stars: 5
   },
   {
     userId: 3,
     productId: 2,
-    body: "hajskfjbajdfahjfajdf",
-    stars: 2
+    body: "Not what i was looking for. Very disapoited",
+    stars: 1
   },
   {
     userId: 3,
     productId: 1,
-    body: "hajskfjbajdfahjfajdf",
-    stars: 21
+    body: "This product works Perfect!!",
+    stars: 4
   },
 ], {});
   },

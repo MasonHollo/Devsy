@@ -14,7 +14,7 @@ function Navigation(): JSX.Element {
           <img id="devsyhome" src="/devsyBackgroundRemoved.png" alt="Devsy Logo" width='120px' height={'120x'} />
         </NavLink>
 
-        <button id='categories'>
+        <button id='categories'  onClick={() => alert('Categories feature coming soon')}>
           <FaBars id="bars" />
           Categories
         </button>
@@ -23,7 +23,7 @@ function Navigation(): JSX.Element {
       <div id="center">
         <div id="search-bar">
           <input type="text" placeholder="Search for anything" />
-          <button type="submit">
+          <button type="submit"  onClick={() => alert('Search feature coming soon')}>
             <FaSearch />
           </button>
         </div>
@@ -33,13 +33,13 @@ function Navigation(): JSX.Element {
       <div id="right">
 
 
-        <button id="heart">
+        <button id="heart"  onClick={() => alert('Favorites feature coming soon')}>
           <FaHeart />
         </button>
 
 
         <ProfileButton />
-        <button id="cart">
+        <button id="cart"  onClick={() => alert('Shopping Cart feature coming soon')}>
 
           <FaCartShopping />
         </button>

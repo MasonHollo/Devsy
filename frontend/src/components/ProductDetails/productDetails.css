@@ -2,3 +2,21 @@
     background-color: red;
     
 }
+#starholder {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.star {
+  font-size: 24px;
+  color: lightgray;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.star.filled {
+  color: gold;
+}

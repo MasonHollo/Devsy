@@ -18,7 +18,7 @@ module.exports = {
       },
       body: {
         allowNull:false,
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING(120)
       },
       stars: {
         allowNull:false,

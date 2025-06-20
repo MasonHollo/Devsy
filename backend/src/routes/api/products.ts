@@ -1,9 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import db from '../../db/models';
-import { restoreUser } from '../../utils/auth';
+import { requireAuth, restoreUser } from '../../utils/auth';
 import { check } from 'express-validator';
 import { handleValidationErrors } from '../../utils/validation';
-const { Product, ProductImage } = db;
+const { Product, ProductImage, Review, User } = db;
 
 const router = require('express').Router();
  
@@ -19,6 +19,16 @@ const validateProduct = [
         .withMessage('Price must be a postive number.'),
     handleValidationErrors
 ];
+
+const validateReview = [
+  check('body')
+    .exists({ checkFalsy: true })
+    .withMessage("body text is required"),
+  check('stars')
+    .isFloat({ min: 1, max: 5 })
+    .withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors
+]
 
 
 //Get all Products
@@ -123,6 +133,81 @@ router.delete('/:id', async (req: Request & { user?: any }, res: Response, next:
     }
 });
 
+//CREATE A REVIEW FOR A PRODUCT BASED ON PRODUCTID
+router.post('/:productId/reviews', requireAuth, validateReview, async (req: Request & { user?: any }, res: Response, next: NextFunction) => {
+  try {
+    const { productId } = req.params;
+    const { body, stars } = req.body;
+
+    const product = await Product.findByPk(productId)
+
+    if (!product) {
+      return res.status(404).json({
+        message: "product couldn't be found"
+      });
+    }
+
+    const reviews = await Review.findOne({
+      where: {
+        userId: req.user.id,
+        productId: product.id
+      }
+    });
+
+    if (reviews) {
+      return res.status(500).json({
+        message: "User already has a review for this spot"
+      });
+    }
+
+    const newReview = await Review.create({
+      userId: req.user.id,
+      productId,
+      body,
+      stars
+    });
+
+    const reviewWithUser = await Review.findOne({
+      where: { id: newReview.id },
+      include: [
+        {
+          model: User,
+          attributes: ['firstName', 'lastName'],
+        },
+      ],
+    });
+
+    return res.status(201).json(reviewWithUser);
+  } catch (error) {
+      next(error);
+  }
+});
+
+//GET ALL REVIEWS BY A SPOTS ID
+router.get('/:id/reviews', async (req: Request & { user?: any }, res: Response, next: NextFunction) => {
+  try {
+    const { id: productId } = req.params;
+    const product = await Product.findByPk(productId)
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product couldn't be found"
+      });
+    }
+    const reviews = await Review.findAll({
+      where: { productId },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName']
+        }
+      ]
+    });
+    return res.status(200).json({ Reviews: reviews });
+  } catch (error) {
+    next(error);
+  }
+});
 
 
 export = router;

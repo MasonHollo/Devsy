@@ -8,6 +8,7 @@ import db from '../../db/models';
 import userRouter from './users';
 import sessionRouter from './session';
 import productRouter from './products'
+import reviewRouter from './reviews'
 import { ForbiddenError, NoResourceError, UnauthorizedError } from "../../errors/customErrors";
 import csurf from "csurf";
 
@@ -30,7 +31,7 @@ router.use(
 router.use('/session', sessionRouter);
 router.use('/users', userRouter);
 router.use('/product', productRouter)
-
+router.use('/review', reviewRouter)
 
 router.get(
     '/restore-user',
