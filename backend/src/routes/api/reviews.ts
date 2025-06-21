@@ -22,8 +22,6 @@ router.delete('/:reviewId', requireAuth,async (req: Request & { user?: any }, re
   try {
     const { reviewId } = req.params;
     const { user } = req;
-
-
     const review = await Review.findByPk(reviewId);
 
     if (!review) {
@@ -37,8 +35,6 @@ router.delete('/:reviewId', requireAuth,async (req: Request & { user?: any }, re
         message: "Forbidden"
       });
     }
-
-
     await review.destroy();
 
     return res.status(200).json({
@@ -56,8 +52,6 @@ router.put('/:reviewId', requireAuth, validateReview, async (req: Request & { us
     const { reviewId } = req.params;
     const { user } = req;
     const { body, stars } = req.body;
-
-
     const reviews = await Review.findByPk(reviewId);
 
     if (!reviews) {
@@ -65,17 +59,14 @@ router.put('/:reviewId', requireAuth, validateReview, async (req: Request & { us
         message: "Review couldn't be found"
       });
     }
-
     if (reviews.userId !== user.id) {
       return res.status(403).json({
         message: "Forbidden"
       });
     }
-
     await reviews.update({
       body, stars
     });
-
       const updatedReview = await Review.findByPk(reviewId, {
       include:   [
         {
@@ -84,7 +75,6 @@ router.put('/:reviewId', requireAuth, validateReview, async (req: Request & { us
         }
       ]
     });
-
     return res.status(200).json(updatedReview);
 
   } catch (error) {

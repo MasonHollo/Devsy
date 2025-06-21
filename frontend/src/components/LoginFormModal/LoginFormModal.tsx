@@ -62,7 +62,7 @@ function LoginFormModal():JSX.Element {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className='errormesg'> {errors.password}</p>}
         <button type="submit">Log In</button>
         <button id="demologinbutton" onClick={demoLogin}>Demo User</button>
       </form>

@@ -28,7 +28,7 @@ export const thunkAuthenticate = (): any => async (dispatch: any) => {
       throw response;
     }
   } catch (e) {
-    console.log(e)
+    throw e
   }
 
 };
@@ -58,13 +58,13 @@ export const thunkLogin = (credentials: ICredentials): any => async (dispatch: a
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentialRequest)
     });
+    const data = await response.json();
     if (response.ok) {
-      const data = await response.json();
-      console.log(data, "in thunk")
+      // console.log(data, "in thunk")
       dispatch(setUser(data));
-      return response;
+      return data;
     } else {
-      throw response;
+       return data;
     }
   } catch (e) {
     const err = e as Response;

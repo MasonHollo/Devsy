@@ -53,9 +53,6 @@ const ManageProducts = () => {
   return (
     <>
       <h1 id="manageheader">Manage Your Products</h1>
-      <button id="create-button" onClick={() => navigate('/products/new')}>
-        Create A New Product
-      </button>
 
       <div className="productList">
         {hasProducts ? (
@@ -72,7 +69,9 @@ const ManageProducts = () => {
             );
           })
         ) : (
-          <a href="/products/new">Create a New Product</a>
+           <button id="create-button" onClick={() => navigate('/products/new')}>
+        Create A New Product
+      </button>
         )}
       </div>
     </>

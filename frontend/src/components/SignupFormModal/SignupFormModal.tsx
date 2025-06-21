@@ -39,10 +39,7 @@ function SignupFormModal() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword:
-          "Confirm Password field must be the same as the Password field",
-      });
+      return setErrors({});
     }
 
     const serverResponse = await dispatch(
@@ -76,7 +73,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className='errormesg'>{errors.email}</p>}
         <label>
           First Name
           <input

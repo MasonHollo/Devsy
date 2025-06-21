@@ -30,7 +30,6 @@ const validateReview = [
   handleValidationErrors
 ]
 
-
 //Get all Products
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -75,29 +74,20 @@ router.put('/:id', validateProduct, async (req: Request & { user?: any }, res: R
         const productId = req.params.id;
         const userId = req.user?.id;
         const { name, description, price } = req.body;
-
+        const product = await db.Product.findByPk(productId);
         if (!userId) {
             return res.status(401).json({ message: 'You must be logged in' });
         }
-
-
-        const product = await db.Product.findByPk(productId);
-
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
-
-
         if (product.userId !== userId) {
             return res.status(403).json({ message: 'You do not have permission to edit this product' });
         }
-
         if (name !== undefined) product.name = name;
         if (description !== undefined) product.description = description;
         if (price !== undefined) product.price = price;
-
         await product.save();
-
         return res.json(product);
     } catch (error) {
         next(error);
@@ -110,23 +100,17 @@ router.delete('/:id', async (req: Request & { user?: any }, res: Response, next:
     try {
         const productId = req.params.id;
         const userId = req.user?.id;
-
+        const product = await db.Product.findByPk(productId);
         if (!userId) {
             return res.status(401).json({ message: 'Unauthorized: You must be logged in' });
         }
-
-        const product = await db.Product.findByPk(productId);
-
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
-
         if (product.userId !== userId) {
             return res.status(403).json({ message: 'You do not have permission to delete this product' });
         }
-
         await product.destroy();
-
         return res.json({ message: 'Product deleted successfully' });
     } catch (error) {
         next(error);
@@ -140,33 +124,28 @@ router.post('/:productId/reviews', requireAuth, validateReview, async (req: Requ
     const { body, stars } = req.body;
 
     const product = await Product.findByPk(productId)
-
     if (!product) {
       return res.status(404).json({
         message: "product couldn't be found"
       });
     }
-
     const reviews = await Review.findOne({
       where: {
         userId: req.user.id,
         productId: product.id
       }
     });
-
     if (reviews) {
       return res.status(500).json({
         message: "User already has a review for this spot"
       });
     }
-
     const newReview = await Review.create({
       userId: req.user.id,
       productId,
       body,
       stars
     });
-
     const reviewWithUser = await Review.findOne({
       where: { id: newReview.id },
       include: [
@@ -176,7 +155,6 @@ router.post('/:productId/reviews', requireAuth, validateReview, async (req: Requ
         },
       ],
     });
-
     return res.status(201).json(reviewWithUser);
   } catch (error) {
       next(error);
@@ -188,7 +166,6 @@ router.get('/:id/reviews', async (req: Request & { user?: any }, res: Response, 
   try {
     const { id: productId } = req.params;
     const product = await Product.findByPk(productId)
-
     if (!product) {
       return res.status(404).json({
         message: "Product couldn't be found"

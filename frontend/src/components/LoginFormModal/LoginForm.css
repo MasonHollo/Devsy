@@ -1,0 +1,36 @@
+#loginheader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -50px;
+
+}
+
+#usernameinput{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#passwordinput{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#demologinbutton:hover{
+cursor: pointer;
+}
+#modal-content{
+    width: 35%;
+    height: 40%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px
+}
+.errormesg{
+    color: rgb(174, 17, 0);
+}
