@@ -54,8 +54,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
                 allowNull: false,
                 validate: {
                     isGoodLength(value: string) {
-                        if (value.length < 1 || value.length > 30) {
-                            throw new Error('First name must be between 1 - 30 characters');
+                        if (value.length < 1 || value.length > 120) {
+                            throw new Error('First name must be between 1 - 120 characters');
                         }
                     },
                 }
@@ -65,8 +65,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
                 allowNull: false,
                 validate: {
                     isGoodLength(value: string) {
-                        if (value.length < 1 || value.length > 30) {
-                            throw new Error('Last name must be between 1 - 30 characters');
+                        if (value.length < 1 || value.length > 300) {
+                            throw new Error('Last name must be between 1 - 300 characters');
                         }
                     },
                 }

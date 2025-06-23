@@ -28,7 +28,7 @@ module.exports = {
   {
     userId: 3,
     productId: 1,
-    body: "This product works Perfect!!",
+    body: "This proster is exactly what i wanted!",
     stars: 4
   },
 ], {});

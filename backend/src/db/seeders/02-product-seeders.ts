@@ -14,22 +14,22 @@ module.exports = {
     options.tableName = 'Products';
     return queryInterface.bulkInsert(options, [
   {
-    name: "testing",
-    description: "testthesthtest",
+    name: "San Francisco Giants Poster",
+    description: "Poster of The San Francisco Giants ballpark.",
     userId: 1,
-    price: 20
+    price: 15
   },
   {
-    name: "products",
-    description: "testthesthtest",
+    name: "San Francisco Giants drink costers.",
+    description: "Slate costers laser etched with memoriable moments form past seasons of the San Francisco Giants.",
     userId: 1,
-    price: 20
+    price: 80
   },
   {
-    name: "testprodct",
-    description: "testthesthtest",
+    name: "J.T. Snow Bobblehead",
+    description: "San Francisco Giants firstbasemen from 1997-2005 Bobblehead with box!",
     userId: 1,
-    price: 20
+    price: 120
   },
 ], {});
   },

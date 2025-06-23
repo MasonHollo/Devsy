@@ -18,11 +18,11 @@ module.exports = {
       },
       name: {
         allowNull:false,
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING(120)
       },
       description: {
         allowNull:false,
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING(300)
       },
       userId: {
         type: Sequelize.INTEGER,
